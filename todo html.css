@@ -1,30 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Caveat:wght@400;700&family=Lobster&family=Monoton&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,700&family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,700&family=Work+Sans:ital,wght@0,400;0,700;1,700&display=swap');
 
 .container1 {
-    background-color: #e0f7fa;
+    background-color: #f9fbfe;
     height: 100vh;
     padding: 10px;
-}
-
-@media (min-width: 992px) {
-    .container1 {
-        /* Adjust styles for large devices here */
-        width: 50vh;
-        height: 100vh;
-        padding: 20px;
-        /* Example adjustment */
-        background-color: #e0f7fa;
-        /* Example adjustment */
-        /* Add other styles specific to large devices */
-    }
-}
-
-@media (min-width: 992px) {
-    .mainContainer {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
 }
 
 .heading1 {
