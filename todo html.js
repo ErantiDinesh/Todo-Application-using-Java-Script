@@ -4,19 +4,27 @@ let inputEl = document.getElementById("userInput");
 
 function getItemsfromLocalStorage() {
     let items = localStorage.getItem("todoList");
-    let parsedList = JSON.parse(items);
-    if (parsedList === null) {
+    if (items === null) {
         return [];
     } else {
-        return parsedList;
+        try {
+            let parsedList = JSON.parse(items);
+            return Array.isArray(parsedList) ? parsedList : [];
+        } catch (error) {
+            console.error("Error parsing todoList from localStorage:", error);
+            return [];
+        }
     }
 }
+
 
 let list1 = getItemsfromLocalStorage();
 
 function clickedSave() {
     localStorage.setItem("todoList", JSON.stringify(list1));
 }
+
+
 
 function deleteItem(listId) {
     let itemNumber = listId.slice(4);
@@ -34,14 +42,20 @@ function deleteItem(listId) {
     list1.splice(itemIndex, 1);
 }
 
-
 function clickedCheckBox(labelId) {
     let element = document.getElementById(labelId);
     element.classList.toggle("checked");
 
     let itemNumber = labelId.slice(5);
-    let itemIndex = list1.findIndex(eachItem => parseInt(itemNumber) === eachItem.number);
-
+    let itemIndex = list1.findIndex(
+        function(eachItem) {
+            if (parseInt(itemNumber) === eachItem.number) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    );
     let checkBoxItem = list1[itemIndex];
     if (checkBoxItem.isChecked === true) {
         checkBoxItem.isChecked = false;
@@ -51,7 +65,7 @@ function clickedCheckBox(labelId) {
 
 }
 
-console.log(list1);
+
 
 function createAndAppendTodo(item) {
     let checkBoxId = "checkBox" + item.number;
@@ -111,6 +125,7 @@ function clickedAdd() {
         number: lengths,
         isChecked: false
     };
+    console.log(typeof(list1));
     list1.push(newtodo);
     createAndAppendTodo(newtodo);
     inputEl.value = "";
