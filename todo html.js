@@ -15,8 +15,7 @@ function getItemsfromLocalStorage() {
 let list1 = getItemsfromLocalStorage();
 
 function clickedSave() {
-    list1 = JSON.stringify(list1);
-    localStorage.setItem("todoList", list1);
+    localStorage.setItem("todoList", JSON.stringify(list1));
 }
 
 function deleteItem(listId) {
