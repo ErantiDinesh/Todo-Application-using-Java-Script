@@ -8,14 +8,10 @@
 
 @media (min-width: 992px) {
     .container1 {
-        /* Adjust styles for large devices here */
         width: 50vh;
         height: 100vh;
         padding: 20px;
-        /* Example adjustment */
         background-color: #e0f7fa;
-        /* Example adjustment */
-        /* Add other styles specific to large devices */
     }
 }
 
