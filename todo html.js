@@ -4,27 +4,19 @@ let inputEl = document.getElementById("userInput");
 
 function getItemsfromLocalStorage() {
     let items = localStorage.getItem("todoList");
-    if (items === null) {
+    let parsedList = JSON.parse(items);
+    if (parsedList === null) {
         return [];
     } else {
-        try {
-            let parsedList = JSON.parse(items);
-            return Array.isArray(parsedList) ? parsedList : [];
-        } catch (error) {
-            console.error("Error parsing todoList from localStorage:", error);
-            return [];
-        }
+        return parsedList;
     }
 }
-
 
 let list1 = getItemsfromLocalStorage();
 
 function clickedSave() {
     localStorage.setItem("todoList", JSON.stringify(list1));
 }
-
-
 
 function deleteItem(listId) {
     let itemNumber = listId.slice(4);
@@ -42,20 +34,14 @@ function deleteItem(listId) {
     list1.splice(itemIndex, 1);
 }
 
+
 function clickedCheckBox(labelId) {
     let element = document.getElementById(labelId);
     element.classList.toggle("checked");
 
     let itemNumber = labelId.slice(5);
-    let itemIndex = list1.findIndex(
-        function(eachItem) {
-            if (parseInt(itemNumber) === eachItem.number) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    );
+    let itemIndex = list1.findIndex(eachItem => parseInt(itemNumber) === eachItem.number);
+
     let checkBoxItem = list1[itemIndex];
     if (checkBoxItem.isChecked === true) {
         checkBoxItem.isChecked = false;
@@ -65,7 +51,7 @@ function clickedCheckBox(labelId) {
 
 }
 
-
+console.log(list1);
 
 function createAndAppendTodo(item) {
     let checkBoxId = "checkBox" + item.number;
@@ -88,8 +74,11 @@ function createAndAppendTodo(item) {
     listItemEl.appendChild(checkBoxEl);
 
     let labelContainerEl = document.createElement("div");
-    labelContainerEl.classList.add("labelContainer1", "d-flex", "flex-row");
+    labelContainerEl.classList.add("labelContainer1");
     listItemEl.appendChild(labelContainerEl);
+    
+    let divContainer1 = document.createElement("div");
+    labelContainerEl.appendChild(divContainer1);
 
     let labelEl = document.createElement("label");
     labelEl.textContent = item.text;
@@ -101,14 +90,17 @@ function createAndAppendTodo(item) {
         labelEl.classList.remove("checked");
     }
     labelEl.setAttribute("for", checkBoxId);
-    labelContainerEl.appendChild(labelEl);
+    divContainer1.appendChild(labelEl);
+    
+    let divContainer = document.createElement("div");
+    labelContainerEl.appendChild(divContainer);
 
     let deleteIconEl = document.createElement("i");
     deleteIconEl.classList.add("fa-trash", "fa-solid", "delteIcon1");
     deleteIconEl.onclick = function() {
         deleteItem(listId);
     };
-    labelContainerEl.appendChild(deleteIconEl);
+    divContainer.appendChild(deleteIconEl);
 
 }
 
@@ -125,7 +117,6 @@ function clickedAdd() {
         number: lengths,
         isChecked: false
     };
-    console.log(typeof(list1));
     list1.push(newtodo);
     createAndAppendTodo(newtodo);
     inputEl.value = "";
